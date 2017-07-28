@@ -1,28 +1,27 @@
 package com.mahidhar.demo.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mahidhar.demo.domain.Employee;
-import com.mahidhar.demo.exception.EmployeeNotFoundException;
 import com.mahidhar.demo.service.EmployeeService;
 
+/**
+ * 
+ * @author Mahidhar
+ *
+ * Employee controller helps the business logic to be shown in the web forms and return as views
+ */
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -57,10 +56,7 @@ public class EmployeeController {
 		{
 			return "redirect:/employees/list";	
 		}
-		
-		
-		
-			
+				
 	}
 	
 	@RequestMapping( value = "/save", method = RequestMethod.POST )
@@ -70,7 +66,7 @@ public class EmployeeController {
 			log.info("Binding Result has Errors ..." + bindingResult.getErrorCount());
 			return "employee/postForm";
 		} else {
-			log.info("Binding Result has nooooooooooooo Errors ..." );
+			log.info("Binding Result has no Errors ..." );
 			Employee savedEmployee = employeeService.create(employee);
 			return "redirect:/employees/list" ;
 		}
@@ -85,15 +81,7 @@ public class EmployeeController {
 		return "employee/view";
 	}
 	
-	@RequestMapping( value = "/", method = RequestMethod.GET )
-	public Iterable<Employee> list(){
-		return employeeService.list();
-	}
 	
-	@RequestMapping( value = "/", method = RequestMethod.POST )
-	public Employee create(@RequestBody Employee employee){
-		return employeeService.create(employee);
-	}
 	
 	@RequestMapping("/create")
 	public String create(Model model) {
@@ -101,28 +89,6 @@ public class EmployeeController {
 		
 		return "employee/postForm";
 	}
+		
 	
-	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
-	public Employee read(@PathVariable(value="id") long id) throws EmployeeNotFoundException {
-		Employee employee = employeeService.read(id);
-		if( employee == null ){
-			throw new EmployeeNotFoundException("employee with id: " + id + " not found.");
-		}
-		return employee;
-	}
-	
-	@RequestMapping( value = "/{id}", method = RequestMethod.PUT )
-	public Employee update(@PathVariable(value="id") long id, @RequestBody Employee employee){
-		return employeeService.update(id,employee);
-	}
-	
-	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-	public void delete(@PathVariable(value="id") int id){
-		employeeService.delete(id);
-	}	
-	
-	@ExceptionHandler(EmployeeNotFoundException.class)
-	public void handleEmployeeNotFound(EmployeeNotFoundException exception, HttpServletResponse response) throws IOException{
-		response.sendError( HttpStatus.NOT_FOUND.value(), exception.getMessage() );
-	}
 }

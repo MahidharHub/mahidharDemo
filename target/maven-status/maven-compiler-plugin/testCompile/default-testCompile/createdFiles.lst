@@ -1,1 +1,3 @@
 com\mahidhar\demo\MahidharDemoApplicationTests.class
+com\mahidhar\demo\controller\EmployeeControllerTest.class
+com\mahidhar\demo\controller\EmployeeControllerIT.class

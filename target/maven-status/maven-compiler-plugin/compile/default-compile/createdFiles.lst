@@ -1,5 +1,4 @@
 com\mahidhar\demo\controller\HomeController.class
-com\mahidhar\demo\exception\EmployeeNotFoundException.class
 com\mahidhar\demo\MahidharDemoApplication.class
 com\mahidhar\demo\controller\EmployeeController.class
 com\mahidhar\demo\exception\controller\GlobalExceptionController.class
@@ -10,3 +9,4 @@ com\mahidhar\demo\exception\CustomGenericException.class
 com\mahidhar\demo\domain\Employee.class
 com\mahidhar\demo\service\EmployeeServiceImpl.class
 com\mahidhar\demo\domain\EmployeeCommandLineRunner.class
+com\mahidhar\demo\controller\EmployeeRestController.class
